@@ -1,0 +1,29 @@
+# ── Core API Framework ────────────────────────────
+fastapi
+uvicorn[standard]
+python-multipart
+jinja2
+
+# ── Database ──────────────────────────────────────
+sqlalchemy
+aiosqlite
+
+# ── Configuration ─────────────────────────────────
+pydantic-settings
+
+# ── AI / NLP ──────────────────────────────────────
+sentence-transformers
+torch
+scikit-learn
+numpy
+
+# ── PDF Parsing ───────────────────────────────────
+PyMuPDF
+
+# ── Utilities ─────────────────────────────────────
+pydantic
+python-dotenv
+
+# ── Testing ───────────────────────────────────────
+pytest
+httpx

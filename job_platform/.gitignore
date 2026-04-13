@@ -1,0 +1,38 @@
+# ── Python ────────────────────────────────────────
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# ── Virtual environments ──────────────────────────
+venv/
+.venv/
+env/
+
+# ── Secrets ───────────────────────────────────────
+.env
+*.key
+
+# ── Database ──────────────────────────────────────
+*.db
+*.sqlite
+
+# ── Uploaded files ────────────────────────────────
+backend/uploads/
+data/
+
+# ── OS ────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── IDE ───────────────────────────────────────────
+.idea/
+.vscode/
+*.swp
+
+# ── Tests ─────────────────────────────────────────
+.pytest_cache/
+htmlcov/
+.coverage

@@ -1,0 +1,49 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# docker-compose.yml — One-command startup for the full platform
+#
+# WHY DOCKER COMPOSE?
+#   docker-compose lets you define the whole environment in one file.
+#   A single `docker-compose up` builds the image (if needed), starts the
+#   container, mounts volumes for persistence, and maps ports.
+#
+# USAGE:
+#   docker-compose up           # start (builds first time, uses cache after)
+#   docker-compose up --build   # force rebuild
+#   docker-compose down         # stop and remove containers
+#   docker-compose logs -f      # stream live logs
+#
+# VISIT: http://localhost:8000
+# ──────────────────────────────────────────────────────────────────────────────
+
+version: "3.9"
+
+services:
+  resumematch:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: resumematch-ai
+    ports:
+      - "8000:8000"           # host:container — visit http://localhost:8000
+    volumes:
+      # Persist the SQLite database across restarts
+      - ./data/db:/app/data
+      # Persist uploaded PDFs across restarts
+      - ./data/uploads:/app/uploads
+    environment:
+      # Override any config.py defaults here without editing source code
+      - HOST=0.0.0.0
+      - PORT=8000
+      - DATABASE_URL=sqlite:////app/data/job_platform.db
+      - UPLOAD_DIR=/app/uploads
+      - SIMILARITY_THRESHOLD=0.35
+      - MAX_RESULTS=10
+      - SBERT_MODEL_NAME=all-MiniLM-L6-v2
+    restart: unless-stopped     # Auto-restart on crash or server reboot
+    healthcheck:
+      test: ["CMD", "python", "-c",
+             "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s         # Give the model time to load before health checks start
